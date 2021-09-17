@@ -6,19 +6,26 @@ import requests
 headers = {
     'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/93.0.4577.63 Safari/537.36',
 }
+
 #城市代码
 train_code_url = 'https://kyfw.12306.cn/otn/resources/js/framework/station_name.js'
+
 #获取响应
 response = requests.get(url=train_code_url, headers=headers)
+
+#自动解码
 response.encoding = response.apparent_encoding
+
 #处理数据
 text = response.text.replace("var station_names ='", '')[:-2]
 list = text.split('@')[1:]
+
 #将数据保存到字典
 city_code_dict = {}
 for i in list:
     i = i.split('|')
     city_code_dict[i[1]] = i[2]
+
 #创建数据库链接
 conn = sqlite3.connect('12306.db')
 c = conn.cursor()
