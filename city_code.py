@@ -40,5 +40,7 @@ c = conn.cursor()
 #将字典插入数据库
 for k, v in city_code_dict.items():
     c.execute(f"INSERT INTO main.citycode (city,code) VALUES ('{k}','{v}')")
+
+#关闭连接
 conn.commit()
 conn.close()
